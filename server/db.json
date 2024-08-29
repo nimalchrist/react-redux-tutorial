@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "62b9",
+      "title": "can be edited",
+      "description": "updation completed"
+    },
+    {
+      "id": "5843",
+      "title": "can be added",
+      "description": "addition completed"
+    },
+    {
+      "id": "7e3b",
+      "title": "can be deleted",
+      "description": "deletion completed"
+    }
+  ]
+}

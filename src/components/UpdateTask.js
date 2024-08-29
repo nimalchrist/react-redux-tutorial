@@ -1,15 +1,28 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Form  from 'react-bootstrap/Form';
-
+import Form from 'react-bootstrap/Form';
+import { useDispatch, useSelector } from "react-redux";
+import { updateTaskToServer } from "../slices/tasksSlice";
 const MyVerticallyCenteredModal = (props) => {
-    const [title,setTitle] = useState('')
-    const [description,setDescription] = useState('')
+  const { selectedTask } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [id, setId] = useState(0);
 
-    const updateTask = () => {
-        props.onHide()
+  const updateTask = () => {
+    dispatch(updateTaskToServer({ title, description, id }));
+    props.onHide();
+  };
+
+  useEffect(() => {
+    if (Object.keys(selectedTask).length !== 0) {
+      setTitle(selectedTask.title);
+      setDescription(selectedTask.description);
+      setId(selectedTask.id);
     }
+  }, [selectedTask]);
   return (
     <Modal
       {...props}
@@ -43,15 +56,15 @@ const MyVerticallyCenteredModal = (props) => {
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
-          
+
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <div className="text-end">
-            <Button variant="primary" type="submit" onClick={(e) => updateTask(e)}>
-              Update Task
-            </Button>
-          </div>
+          <Button variant="primary" type="submit" onClick={(e) => updateTask()}>
+            Update Task
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   );
